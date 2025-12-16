@@ -108,18 +108,17 @@ namespace draft_ml.Ingestion.Source.TheMealDb
             public string StrIngredient { get; set; }
         }
     }
-    
+
     public interface ITheMealDb
     {
         [Get("search.php")]
         public Task<SearchResponse> SearchMeal([Query] SearchQueryParameters parameters);
 
         [Get("lookup.php")]
-        public Task<SearchResponse> LookupMeal([Query][AliasAs("i")] string id);
+        public Task<SearchResponse> LookupMeal([Query] [AliasAs("i")] string id);
 
         [Get("filter.php")]
         public Task<FilterResponse> FilterMeal([Query] FilterQueryParameters parameters);
-
 
         [Get("list.php?c=list")]
         public Task<ListResponse> ListCategories();
@@ -129,7 +128,6 @@ namespace draft_ml.Ingestion.Source.TheMealDb
 
         [Get("list.php?i=list")]
         public Task<ListResponse> ListIngredients();
-
 
         // Latest - Premium only
         [Get("latest.php")]

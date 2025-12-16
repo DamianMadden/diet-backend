@@ -8,8 +8,9 @@ namespace draft_ml.Db.Models
         public required Guid TagId { get; set; }
 
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public User? User { get; set; }
+
         [ForeignKey("TagId")]
-        public Tag Tag { get; set; }
+        public Tag? Tag { get; set; }
     }
 }

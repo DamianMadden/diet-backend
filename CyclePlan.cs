@@ -1,12 +1,18 @@
 ﻿using draft_ml.Controllers.Models;
 using draft_ml.Data;
 using draft_ml.Db;
+using draft_ml.Extensions;
 
 namespace draft_ml
 {
     public class CyclePlan(DietDbContext data)
     {
-        public async Task<List<DayPlan>> PlanCycle(Vector target, int cycleLength, int meals, int snacks)
+        public async Task<List<DayPlan>> PlanCycle(
+            Vector target,
+            int cycleLength,
+            int meals,
+            int snacks
+        )
         {
             List<DayPlan> result = new List<DayPlan>();
 
@@ -14,7 +20,8 @@ namespace draft_ml
             Vector cycleTarget = target.Multiply(cycleLength);
 
             // For each day in the cycle
-            for (int i = 0; i < cycleLength; i++) {
+            for (int i = 0; i < cycleLength; i++)
+            {
                 Vector dayTarget = target.Clone();
                 (DayPlan dayPlan, Vector change) = await PlanDay(dayTarget, meals, snacks);
                 result.Add(dayPlan);
@@ -28,7 +35,8 @@ namespace draft_ml
         {
             DayPlan result = new DayPlan();
 
-            for (int i = 0; i < meals; i++) {
+            for (int i = 0; i < meals; i++)
+            {
                 Vector mealTarget = target.Divide(meals - i);
 
                 // Find the closest meal to the target
@@ -39,7 +47,8 @@ namespace draft_ml
             }
 
             // Examine the snacks to see if they can improve the accuracy
-            for (int i = 0; i < snacks; i++) {
+            for (int i = 0; i < snacks; i++)
+            {
                 Vector snackTarget = target.Divide(snacks - i);
 
                 // Find the closest meal to the target
