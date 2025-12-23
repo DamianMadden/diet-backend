@@ -15,7 +15,7 @@ namespace draft_ml.Migrations
 {
     [DbContext(typeof(DietDbContext))]
     [Migration("20251211032746_sessions")]
-    partial class sessions
+    partial class Sessions
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

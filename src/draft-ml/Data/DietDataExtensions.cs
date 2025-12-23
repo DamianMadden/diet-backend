@@ -12,7 +12,7 @@ namespace draft_ml.Data
 
         public static async Task<Snack> GetSnackAsync(this DietDbContext db, Vector vec)
         {
-            return default; /* db.Snacks
+            return default!; /* db.Snacks
                 .OrderBy(x => x.Nutrients.L2Distance(vec))
                 .Take(1)
                 .Single();*/

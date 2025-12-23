@@ -13,57 +13,50 @@ namespace draft_ml.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Ingredients_Meals_MealId",
-                table: "Ingredients");
+                table: "Ingredients"
+            );
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_PlanMeals",
-                table: "PlanMeals");
+            migrationBuilder.DropPrimaryKey(name: "PK_PlanMeals", table: "PlanMeals");
 
-            migrationBuilder.DropIndex(
-                name: "IX_PlanMeals_PlanId",
-                table: "PlanMeals");
+            migrationBuilder.DropIndex(name: "IX_PlanMeals_PlanId", table: "PlanMeals");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Meals_Nutrients",
-                table: "Meals");
+            migrationBuilder.DropIndex(name: "IX_Meals_Nutrients", table: "Meals");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Ingredients_MealId",
-                table: "Ingredients");
+            migrationBuilder.DropIndex(name: "IX_Ingredients_MealId", table: "Ingredients");
 
-            migrationBuilder.DropColumn(
-                name: "Name",
-                table: "Users");
+            migrationBuilder.DropColumn(name: "Name", table: "Users");
 
-            migrationBuilder.DropColumn(
-                name: "MealId",
-                table: "Ingredients");
+            migrationBuilder.DropColumn(name: "MealId", table: "Ingredients");
 
             migrationBuilder.AddColumn<bool>(
                 name: "EmailVerified",
                 table: "Users",
                 type: "boolean",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: false
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "FamilyName",
                 table: "Users",
                 type: "text",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
 
             migrationBuilder.AddColumn<string>(
                 name: "GivenName",
                 table: "Users",
                 type: "text",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_PlanMeals",
                 table: "PlanMeals",
-                columns: new[] { "PlanId", "MealId" });
+                columns: new[] { "PlanId", "MealId" }
+            );
 
             migrationBuilder.CreateTable(
                 name: "UserExternalIdentities",
@@ -71,40 +64,48 @@ namespace draft_ml.Migrations
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     IdentityProvider = table.Column<int>(type: "integer", nullable: false),
-                    ExternalIdentity = table.Column<string>(type: "text", nullable: false)
+                    ExternalIdentity = table.Column<string>(type: "text", nullable: false),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserExternalIdentities", x => new { x.UserId, x.IdentityProvider });
+                    table.PrimaryKey(
+                        "PK_UserExternalIdentities",
+                        x => new { x.UserId, x.IdentityProvider }
+                    );
                     table.ForeignKey(
                         name: "FK_UserExternalIdentities_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "UserPlan",
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PlanId = table.Column<Guid>(type: "uuid", nullable: false)
+                    PlanId = table.Column<Guid>(type: "uuid", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserPlan", x => new { x.UserId, x.PlanId });
-                });
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlanMeals_MealId",
                 table: "PlanMeals",
-                column: "MealId");
+                column: "MealId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_MealIngredients_IngredientId",
                 table: "MealIngredients",
-                column: "IngredientId");
+                column: "IngredientId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MealIngredients_Ingredients_IngredientId",
@@ -112,7 +113,8 @@ namespace draft_ml.Migrations
                 column: "IngredientId",
                 principalTable: "Ingredients",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MealIngredients_Meals_MealId",
@@ -120,7 +122,8 @@ namespace draft_ml.Migrations
                 column: "MealId",
                 principalTable: "Meals",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_PlanMeals_Meals_MealId",
@@ -128,7 +131,8 @@ namespace draft_ml.Migrations
                 column: "MealId",
                 principalTable: "Meals",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
 
         /// <inheritdoc />
@@ -136,84 +140,80 @@ namespace draft_ml.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_MealIngredients_Ingredients_IngredientId",
-                table: "MealIngredients");
+                table: "MealIngredients"
+            );
 
             migrationBuilder.DropForeignKey(
                 name: "FK_MealIngredients_Meals_MealId",
-                table: "MealIngredients");
+                table: "MealIngredients"
+            );
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_PlanMeals_Meals_MealId",
-                table: "PlanMeals");
+            migrationBuilder.DropForeignKey(name: "FK_PlanMeals_Meals_MealId", table: "PlanMeals");
 
-            migrationBuilder.DropTable(
-                name: "UserExternalIdentities");
+            migrationBuilder.DropTable(name: "UserExternalIdentities");
 
-            migrationBuilder.DropTable(
-                name: "UserPlan");
+            migrationBuilder.DropTable(name: "UserPlan");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_PlanMeals",
-                table: "PlanMeals");
+            migrationBuilder.DropPrimaryKey(name: "PK_PlanMeals", table: "PlanMeals");
 
-            migrationBuilder.DropIndex(
-                name: "IX_PlanMeals_MealId",
-                table: "PlanMeals");
+            migrationBuilder.DropIndex(name: "IX_PlanMeals_MealId", table: "PlanMeals");
 
             migrationBuilder.DropIndex(
                 name: "IX_MealIngredients_IngredientId",
-                table: "MealIngredients");
+                table: "MealIngredients"
+            );
 
-            migrationBuilder.DropColumn(
-                name: "EmailVerified",
-                table: "Users");
+            migrationBuilder.DropColumn(name: "EmailVerified", table: "Users");
 
-            migrationBuilder.DropColumn(
-                name: "FamilyName",
-                table: "Users");
+            migrationBuilder.DropColumn(name: "FamilyName", table: "Users");
 
-            migrationBuilder.DropColumn(
-                name: "GivenName",
-                table: "Users");
+            migrationBuilder.DropColumn(name: "GivenName", table: "Users");
 
             migrationBuilder.AddColumn<string>(
                 name: "Name",
                 table: "Users",
                 type: "text",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddColumn<Guid>(
                 name: "MealId",
                 table: "Ingredients",
                 type: "uuid",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_PlanMeals",
                 table: "PlanMeals",
-                columns: new[] { "MealId", "PlanId" });
+                columns: new[] { "MealId", "PlanId" }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlanMeals_PlanId",
                 table: "PlanMeals",
-                column: "PlanId");
+                column: "PlanId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meals_Nutrients",
                 table: "Meals",
-                column: "Nutrients");
+                column: "Nutrients"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ingredients_MealId",
                 table: "Ingredients",
-                column: "MealId");
+                column: "MealId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Ingredients_Meals_MealId",
                 table: "Ingredients",
                 column: "MealId",
                 principalTable: "Meals",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
         }
     }
 }

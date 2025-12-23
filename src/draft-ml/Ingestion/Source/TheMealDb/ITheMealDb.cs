@@ -25,16 +25,16 @@ namespace draft_ml.Ingestion.Source.TheMealDb
 
     public class SearchResponse
     {
-        public MealResponse[] Meals { get; set; }
+        public MealResponse[] Meals { get; set; } = [];
 
         public class MealResponse
         {
             public DateTime? DateModified { get; set; }
-            public string IdMeal { get; set; }
-            public string StrArea { get; set; }
-            public string StrCategory { get; set; }
-            public string StrCreativeCommonsConfirmed { get; set; }
-            public string StrImageSource { get; set; }
+            public string IdMeal { get; set; } = string.Empty;
+            public string StrArea { get; set; } = string.Empty;
+            public string StrCategory { get; set; } = string.Empty;
+            public string StrCreativeCommonsConfirmed { get; set; } = string.Empty;
+            public string StrImageSource { get; set; } = string.Empty;
             public string? StrIngredient1 { get; set; }
             public string? StrIngredient2 { get; set; }
             public string? StrIngredient3 { get; set; }
@@ -56,9 +56,9 @@ namespace draft_ml.Ingestion.Source.TheMealDb
             public string? StrIngredient19 { get; set; }
             public string? StrIngredient20 { get; set; }
             public string? StrInstructions { get; set; }
-            public string StrMeal { get; set; }
-            public string StrMealAlternate { get; set; }
-            public string StrMealThumb { get; set; }
+            public string StrMeal { get; set; } = string.Empty;
+            public string StrMealAlternate { get; set; } = string.Empty;
+            public string StrMealThumb { get; set; } = string.Empty;
             public string? StrMeasure1 { get; set; }
             public string? StrMeasure2 { get; set; }
             public string? StrMeasure3 { get; set; }
@@ -79,33 +79,33 @@ namespace draft_ml.Ingestion.Source.TheMealDb
             public string? StrMeasure18 { get; set; }
             public string? StrMeasure19 { get; set; }
             public string? StrMeasure20 { get; set; }
-            public string StrSource { get; set; }
-            public string StrTags { get; set; }
-            public string StrYoutube { get; set; }
+            public string StrSource { get; set; } = string.Empty;
+            public string StrTags { get; set; } = string.Empty;
+            public string StrYoutube { get; set; } = string.Empty;
         }
     }
 
     public class FilterResponse
     {
-        public MealResponse[] Meals { get; set; }
+        public MealResponse[] Meals { get; set; } = [];
 
         public class MealResponse
         {
-            public string IdMeal { get; set; }
-            public string StrMeal { get; set; }
-            public string StrMealThumb { get; set; }
+            public string IdMeal { get; set; } = string.Empty;
+            public string StrMeal { get; set; } = string.Empty;
+            public string StrMealThumb { get; set; } = string.Empty;
         }
     }
 
     public class ListResponse
     {
-        public MealResponse[] Meals { get; set; }
+        public MealResponse[] Meals { get; set; } = [];
 
         public class MealResponse
         {
-            public string StrArea { get; set; }
-            public string StrCategory { get; set; }
-            public string StrIngredient { get; set; }
+            public string StrArea { get; set; } = string.Empty;
+            public string StrCategory { get; set; } = string.Empty;
+            public string StrIngredient { get; set; } = string.Empty;
         }
     }
 

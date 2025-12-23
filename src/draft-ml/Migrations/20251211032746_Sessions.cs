@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace draft_ml.Migrations
 {
     /// <inheritdoc />
-    public partial class sessions : Migration
+    public partial class Sessions : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,19 +17,22 @@ namespace draft_ml.Migrations
                 {
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     RefreshTokenHash = table.Column<string>(type: "text", nullable: false),
-                    Expiry = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Expiry = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sessions", x => new { x.UserId, x.RefreshTokenHash });
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Sessions");
+            migrationBuilder.DropTable(name: "Sessions");
         }
     }
 }
