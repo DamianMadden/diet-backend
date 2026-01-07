@@ -40,7 +40,7 @@ namespace draft_ml
                 Vector mealTarget = target.Divide(meals - i);
 
                 // Find the closest meal to the target
-                Meal meal = await data.GetMealAsync(mealTarget);
+                Meal meal = (await data.GetMealAsync(mealTarget)).Single();
                 result.Meals.Add(meal);
 
                 target = target.Subtract(meal.Nutrients);
@@ -52,12 +52,12 @@ namespace draft_ml
                 Vector snackTarget = target.Divide(snacks - i);
 
                 // Find the closest meal to the target
-                Snack snack = await data.GetSnackAsync(snackTarget);
+                //Snack snack = await data.GetSnackAsync(snackTarget);
 
                 // Calculate the quantity of the snack to approximate the target
-                snack.Quantity = (float)(snackTarget.L2DNorm() / snack.Nutrients.L2DNorm());
+                //snack.Quantity = (float)(snackTarget.L2DNorm() / snack.Nutrients.L2DNorm());
 
-                target = target.Subtract(snack.AppliedNutrients);
+                //target = target.Subtract(snack.AppliedNutrients);
             }
 
             return (result, target);

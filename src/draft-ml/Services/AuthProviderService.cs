@@ -1,3 +1,4 @@
+using draft_ml.Data;
 using draft_ml.Db;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,7 +55,7 @@ public abstract class AuthProviderService(DietDbContext db, ILogger logger)
 
             if (user is null)
             {
-                user = new User
+                user = new User()
                 {
                     Id = Guid.NewGuid(),
                     Email = email,
@@ -74,6 +75,15 @@ public abstract class AuthProviderService(DietDbContext db, ILogger logger)
                         IdentityProvider = provider,
                     }
                 );
+
+                await db.SaveChangesAsync();
+            }
+            else if (user.Email != email)
+            {
+                user.Email = email;
+                user.GivenName = givenName;
+                user.FamilyName = familyName;
+                user.EmailVerified = emailVerified;
 
                 await db.SaveChangesAsync();
             }

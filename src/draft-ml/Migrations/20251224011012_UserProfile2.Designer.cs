@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Pgvector;
@@ -13,9 +14,11 @@ using draft_ml.Db;
 namespace draft_ml.Migrations
 {
     [DbContext(typeof(DietDbContext))]
-    partial class DietDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251224011012_UserProfile2")]
+    partial class UserProfile2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,19 +142,11 @@ namespace draft_ml.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Vector>("MealTarget")
-                        .HasColumnType("vector");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Plans");
                 });
@@ -280,14 +275,14 @@ namespace draft_ml.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("ActivityLevel")
-                        .HasColumnType("integer");
+                    b.Property<float>("ActivityLevelMagnitude")
+                        .HasColumnType("real");
 
                     b.Property<float>("ActivityResistanceCoefficient")
                         .HasColumnType("real");
 
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
+                    b.Property<int>("Age")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -395,13 +390,6 @@ namespace draft_ml.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("draft_ml.Db.Models.Plan", b =>
-                {
-                    b.HasOne("draft_ml.Db.Models.User", null)
-                        .WithMany("Plans")
-                        .HasForeignKey("UserId");
-                });
-
             modelBuilder.Entity("draft_ml.Db.Models.PlanMeal", b =>
                 {
                     b.HasOne("draft_ml.Db.Models.Meal", null)
@@ -454,8 +442,6 @@ namespace draft_ml.Migrations
                     b.Navigation("Exclusions");
 
                     b.Navigation("ExternalIdentities");
-
-                    b.Navigation("Plans");
                 });
 #pragma warning restore 612, 618
         }

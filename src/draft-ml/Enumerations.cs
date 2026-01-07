@@ -21,3 +21,28 @@ public enum IdentityProvider
 {
     GoogleIdentity = 0,
 }
+
+public enum Gender
+{
+    Male = 0,
+    Female,
+}
+
+public enum Goal
+{
+    LoseWeightFast = 0,
+    LoseWeight,
+    MaintainWeight,
+    GainWeight,
+    GainWeightFast,
+}
+
+public enum ActivityLevel
+{
+    Sedentary = 0,
+    LightlyActive,
+    ModeratelyActive,
+    Active,
+    VeryActive,
+    ExtremelyActive,
+}

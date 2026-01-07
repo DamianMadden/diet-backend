@@ -6,7 +6,7 @@
         public required Guid MealId { get; set; }
         public required double Quantity { get; set; }
 
-        // For now Timestamp will just denote day, in future it might be more prescriptive about when to eat
+        // TODO: For now Timestamp will just denote day, in future it might be more prescriptive about when to eat
         public DateTimeOffset Timestamp { get; set; }
     }
 }
