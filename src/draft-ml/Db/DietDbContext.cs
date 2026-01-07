@@ -44,12 +44,16 @@ public class DietDbContext(DbContextOptions<DietDbContext> opt) : DbContext(opt)
 
         modelBuilder.Entity<Meal>(e =>
         {
-            e.HasMany(e => e.Ingredients).WithMany().UsingEntity<MealIngredient>();
+            e.HasMany(e => e.Ingredients).WithOne(mi => mi.Meal).HasForeignKey(mi => mi.MealId);
         });
 
         modelBuilder.Entity<MealIngredient>(e =>
         {
             e.HasKey(e => new { e.MealId, e.IngredientId });
+
+            e.HasOne(mi => mi.Meal).WithMany(m => m.Ingredients).HasForeignKey(mi => mi.MealId);
+
+            e.HasOne(mi => mi.Ingredient).WithMany().HasForeignKey(mi => mi.IngredientId);
         });
 
         modelBuilder.Entity<Plan>(e =>
@@ -86,16 +90,19 @@ public class DietDbContext(DbContextOptions<DietDbContext> opt) : DbContext(opt)
             e.HasMany(e => e.Addresses).WithOne(e => e.User).HasForeignKey(e => e.UserId);
 
             e.HasMany(e => e.ExternalIdentities).WithOne(e => e.User).HasForeignKey(e => e.UserId);
+
+            e.HasMany(e => e.Plans)
+                .WithMany()
+                .UsingEntity<UserPlan>(
+                    j => j.HasOne(up => up.Plan).WithMany().HasForeignKey(up => up.PlanId),
+                    j => j.HasOne(up => up.User).WithMany().HasForeignKey(up => up.UserId),
+                    j => j.HasKey(up => new { up.UserId, up.PlanId })
+                );
         });
 
         modelBuilder.Entity<UserExternalIdentity>(e =>
         {
             e.HasKey(e => new { e.UserId, e.IdentityProvider });
-        });
-
-        modelBuilder.Entity<UserPlan>(e =>
-        {
-            e.HasKey(e => new { e.UserId, e.PlanId });
         });
 
         modelBuilder.Entity<UserTagExclusion>(e =>

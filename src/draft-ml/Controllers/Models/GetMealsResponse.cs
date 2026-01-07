@@ -2,6 +2,14 @@
 {
     public class GetMealsResponse
     {
-        public List<Guid> Meals { get; set; } = [];
+        public List<MealSummary> Meals { get; set; } = [];
+    }
+
+    public class MealSummary
+    {
+        public required Guid Id { get; set; }
+        public required string Name { get; set; }
+        public required string ThumbnailUrl { get; set; }
+        public required string Description { get; set; }
     }
 }

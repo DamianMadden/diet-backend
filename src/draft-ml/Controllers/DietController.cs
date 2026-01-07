@@ -51,9 +51,18 @@ namespace draft_ml.Controllers
 
                 var meals = await data.GetMealAsync(targetVector, count, page);
 
-                var response = new GetMealsResponse();
-                // TODO: Return a list of objects with thumbnail urls and other limited information
-                response.Meals = meals.Select(m => m.Id).ToList();
+                var response = new GetMealsResponse
+                {
+                    Meals = meals
+                        .Select(m => new MealSummary
+                        {
+                            Id = m.Id,
+                            Name = m.Name,
+                            ThumbnailUrl = m.ThumbnailUrl,
+                            Description = m.Description,
+                        })
+                        .ToList(),
+                };
 
                 return Ok(response);
             }
