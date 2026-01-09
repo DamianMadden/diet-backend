@@ -1,19 +1,16 @@
 ﻿using draft_ml.Db;
 using draft_ml.Db.Models;
 using Microsoft.EntityFrameworkCore;
-using Pgvector;
 using Testcontainers.PostgreSql;
-using Xunit;
 
 namespace draft_ml.UnitTests.Fixtures;
 
-public class CyclePlanFixture : IAsyncLifetime
+public class DatabaseFixture : IAsyncLifetime
 {
     private readonly PostgreSqlContainer _container = new PostgreSqlBuilder()
         .WithImage("pgvector/pgvector:0.8.1-pg18-trixie")
         .Build();
 
-    public CyclePlan _cyclePlan;
     public DietDbContext _db;
 
     public async Task InitializeAsync()
@@ -35,8 +32,6 @@ public class CyclePlanFixture : IAsyncLifetime
             }
         );
         await _db.SaveChangesAsync();
-
-        _cyclePlan = new CyclePlan(_db);
     }
 
     public async Task DisposeAsync()
