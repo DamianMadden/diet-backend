@@ -11,7 +11,7 @@ public class DatabaseFixture : IAsyncLifetime
         .WithImage("pgvector/pgvector:0.8.1-pg18-trixie")
         .Build();
 
-    public DietDbContext _db;
+    public DietDbContext? _db;
 
     public async Task InitializeAsync()
     {
@@ -29,6 +29,9 @@ public class DatabaseFixture : IAsyncLifetime
             {
                 Id = Guid.NewGuid(),
                 Nutrients = new Vector(new ReadOnlyMemory<float>([7.2f, 9.1f, 2.7f])),
+                Name = "",
+                Description = "",
+                ThumbnailUrl = "",
             }
         );
         await _db.SaveChangesAsync();
@@ -36,7 +39,7 @@ public class DatabaseFixture : IAsyncLifetime
 
     public async Task DisposeAsync()
     {
-        await _db.DisposeAsync();
+        await _db!.DisposeAsync();
         await _container.DisposeAsync();
     }
 }

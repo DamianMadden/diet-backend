@@ -91,6 +91,11 @@ public class DietDbContext(DbContextOptions<DietDbContext> opt) : DbContext(opt)
 
             e.HasMany(e => e.ExternalIdentities).WithOne(e => e.User).HasForeignKey(e => e.UserId);
 
+            e.HasOne(e => e.PrimaryPlan)
+                .WithMany()
+                .HasForeignKey(e => e.PrimaryPlanId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             e.HasMany(e => e.Plans)
                 .WithMany()
                 .UsingEntity<UserPlan>(

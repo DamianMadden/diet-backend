@@ -10,9 +10,9 @@ public class Meal
     [Column(TypeName = "vector(3)")]
     public required Vector Nutrients { get; set; }
 
-    public string Name { get; set; }
-    public string ThumbnailUrl { get; set; }
-    public string Description { get; set; }
+    public required string Name { get; set; }
+    public required string ThumbnailUrl { get; set; }
+    public required string Description { get; set; }
 
     public List<MealIngredient> Ingredients { get; set; } = [];
 }

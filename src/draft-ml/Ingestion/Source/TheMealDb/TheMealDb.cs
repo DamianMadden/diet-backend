@@ -46,6 +46,9 @@ namespace draft_ml.Ingestion.Source.TheMealDb
                     {
                         Id = Guid.NewGuid(),
                         Nutrients = new Vector(new ReadOnlyMemory<float>([10.5f, 5.6f, 6.7f])),
+                        Name = "",
+                        Description = "",
+                        ThumbnailUrl = "",
                     };
                     dietDb.Meals.Add(mealEntity);
                 }

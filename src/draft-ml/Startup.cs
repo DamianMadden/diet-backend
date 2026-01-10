@@ -107,6 +107,9 @@ public class Startup
                 {
                     Id = Guid.NewGuid(),
                     Nutrients = new Vector(new ReadOnlyMemory<float>([10.5f, 5.6f, 6.7f])),
+                    Name = "",
+                    Description = "",
+                    ThumbnailUrl = "",
                 }
             );
 
@@ -115,6 +118,9 @@ public class Startup
                 {
                     Id = Guid.NewGuid(),
                     Nutrients = new Vector(new ReadOnlyMemory<float>([7.2f, 9.1f, 2.7f])),
+                    Name = "",
+                    Description = "",
+                    ThumbnailUrl = "",
                 }
             );
 
@@ -128,6 +134,9 @@ public class Startup
                 {
                     Id = Guid.NewGuid(),
                     Nutrients = new Vector(new ReadOnlyMemory<float>([1.2f, 0f, 0f])),
+                    Name = "",
+                    Description = "",
+                    ThumbnailUrl = "",
                 }
             );
 
@@ -136,6 +145,9 @@ public class Startup
                 {
                     Id = Guid.NewGuid(),
                     Nutrients = new Vector(new ReadOnlyMemory<float>([0f, 1.2f, 0f])),
+                    Name = "",
+                    Description = "",
+                    ThumbnailUrl = "",
                 }
             );
 
@@ -144,6 +156,9 @@ public class Startup
                 {
                     Id = Guid.NewGuid(),
                     Nutrients = new Vector(new ReadOnlyMemory<float>([0f, 0f, 1.2f])),
+                    Name = "",
+                    Description = "",
+                    ThumbnailUrl = "",
                 }
             );
 

@@ -38,6 +38,9 @@ public class User
 
     public Vector? MealTarget { get; set; }
 
+    public Guid? PrimaryPlanId { get; set; }
+    public Plan? PrimaryPlan { get; set; }
+
     public List<Plan> Plans { get; set; } = [];
     public List<Address> Addresses { get; set; } = [];
     public List<UserTagExclusion> Exclusions { get; set; } = [];

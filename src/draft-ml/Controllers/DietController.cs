@@ -150,6 +150,7 @@ namespace draft_ml.Controllers
                 return Ok(
                     new UserProfile
                     {
+                        PlanId = user.PrimaryPlanId,
                         Height = user.Height,
                         Weight = user.Weight,
                         Gender = user.Gender,
@@ -182,28 +183,32 @@ namespace draft_ml.Controllers
                 user.DateOfBirth = request.DateOfBirth;
                 user.ActivityLevel = request.ActivityLevel;
                 user.Goal = request.Goal;
-                // TODO: Make customisable
-                user.ActivityResistanceCoefficient = .5f;
+                user.ActivityResistanceCoefficient = request.ActivityResistanceCoefficient;
 
                 // Calculate user's meal target
                 user.MealTarget = DietFunctions.calculateMealTarget(user, DateTime.UtcNow);
 
-                var planId = Guid.NewGuid();
-                data.Add(
-                    new Plan
-                    {
-                        Id = planId,
-                        Name = "primary",
-                        Meals = [],
-                        MealTarget = user.MealTarget,
-                    }
-                );
+                if (request.PlanId is null)
+                {
+                    request.PlanId = Guid.NewGuid();
+                    data.Add(
+                        new Plan
+                        {
+                            Id = (Guid)request.PlanId,
+                            Name = "primary",
+                            Meals = [],
+                            MealTarget = user.MealTarget,
+                        }
+                    );
 
-                data.Add(new UserPlan { UserId = userId, PlanId = planId });
+                    data.Add(new UserPlan { UserId = userId, PlanId = (Guid)request.PlanId });
+
+                    user.PrimaryPlanId = (Guid)request.PlanId;
+                }
 
                 await data.SaveChangesAsync();
 
-                return Ok();
+                return Ok(new { plan_id = (Guid)request.PlanId });
             }
             catch (Exception ex)
             {
