@@ -7,14 +7,74 @@ pool:
 
 variables:
   solution: 'diet.sln'
+  buildConfiguration: 'Release'
 
-steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(solution)'
+stages:
+- stage: 'Build'
+  displayName: 'Build & Unit Test'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build job'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Login to Azure CLI'
+      inputs:
+        azureSubscription: 'AZServiceConnection'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az login --service-principal -u $(AZURE_CLIENT_ID) --tenant $(AZURE_TENANT_ID) --allow-no-subscriptions --federated-token $(AZURE_ID_TOKEN)
+          az account set --subscription $(AZURE_SUBSCRIPTION_ID)
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'test'
-    projects: '$(solution)'
+    - task: Docker@2
+      displayName: Build and push image to container registry
+      inputs:
+        command: buildAndPush
+        repository: diet-backend
+        dockerfile: Dockerfile
+        containerRegistry: AZRegistry
+        tags: |
+          $(Build.BuildId)
+          
+    - task: PublishPipelineArtifact@1
+      inputs:
+        artifactName: 'manifests'
+        path: 'manifests'
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy job
+    environment: 'test.default'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'manifests'
+              downloadPath: '$(System.ArtifactsDirectory)/manifests'
+
+          - task: KubernetesManifest@1
+            displayName: Create imagePullSecret
+            inputs:
+              action: 'createSecret'
+              connectionType: 'kubernetesServiceConnection'
+              kubernetesServiceConnection: 'AZKubernetes'
+              secretType: 'dockerRegistry'
+              secretName: '$(imagePullSecret)'
+              dockerRegistryEndpoint: 'AZRegistry'
+
+          - task: KubernetesManifest@1
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: 'deploy'
+              connectionType: 'kubernetesServiceConnection'
+              kubernetesServiceConnection: 'AZKubernetes'
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              containers: 'dietcr.azurecr.io/diet-backend:$(Build.BuildId)'
+              imagePullSecrets: '$(imagePullSecret)'
