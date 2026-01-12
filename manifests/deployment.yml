@@ -6,7 +6,7 @@ metadata:
     app: diet-backend
     version: v1
 spec:
-  # Replicas are managed by HPA, Initial value here
+  # Replicas are managed by KEDA, Initial value here
   replicas: 1
   revisionHistoryLimit: 3
   strategy:
