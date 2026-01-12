@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: damianmaddendietbackend 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: damianmaddendietbackend
+  template:
+    metadata:
+      labels:
+        app: damianmaddendietbackend 
+    spec:
+      containers:
+        - name: damianmaddendietbackend 
+          image: dietcr.azurecr.io/damianmaddendietbackend
+          ports:
+          - containerPort: 8080
