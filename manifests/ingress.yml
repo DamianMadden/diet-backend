@@ -33,7 +33,7 @@ spec:
   # TODO: SSL Configuration
   # tls:
   #   - hosts:
-  #       - api.yourdomain.com
+  #       - tbd.com
   #     secretName: diet-backend-tls
 
   rules:

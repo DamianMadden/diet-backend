@@ -12,6 +12,18 @@ spec:
   minReplicas: 0
   maxReplicas: 1
   metrics:
+    # Object metric required for scaling to zero
+    - type: Object
+      object:
+        metric:
+          name: requests-per-second
+        describedObject:
+          apiVersion: networking.k8s.io/v1
+          kind: Ingress
+          name: diet-backend-ingress
+        target:
+          type: Value
+          value: "10"  # Scale up when RPS exceeds 100
     - type: Resource
       resource:
         name: cpu

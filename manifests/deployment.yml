@@ -41,12 +41,6 @@ spec:
               value: "Production"
             - name: ASPNETCORE_URLS
               value: "http://+:8080"
-            # Add your database connection string and other secrets as ConfigMap or Secret references
-            # - name: ConnectionStrings__DefaultConnection
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: diet-backend-secrets
-            #       key: database-connection-string
           resources:
             requests:
               memory: "256Mi"
