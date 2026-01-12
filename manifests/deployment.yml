@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: diet-backend 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diet-backend
+  template:
+    metadata:
+      labels:
+        app: diet-backend 
+    spec:
+      containers:
+        - name: diet-backend 
+          image: dietcr.azurecr.io/diet-backend
+          ports:
+          - containerPort: 8080
