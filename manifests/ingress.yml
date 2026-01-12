@@ -1,0 +1,61 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: diet-backend-ingress
+  labels:
+    app: diet-backend
+  annotations:
+    # Nginx Ingress Controller annotations
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO: Configure SSL
+
+    # Rate limiting
+    nginx.ingress.kubernetes.io/limit-rps: "10"
+
+    # CORS settings
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+
+    # Connection settings
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+
+    # Health check
+    nginx.ingress.kubernetes.io/health-check-path: "/health"
+
+spec:
+  # TLS configuration
+  # TODO: SSL Configuration
+  # tls:
+  #   - hosts:
+  #       - api.yourdomain.com
+  #     secretName: diet-backend-tls
+
+  rules:
+    # TODO: Domain configuration
+    #- host: tbd.com
+    #  http:
+    #    paths:
+    #      - path: /
+    #        pathType: Prefix
+    #        backend:
+    #          service:
+    #            name: diet-backend-service
+    #            port:
+    #              number: 80
+
+    # Fallback rule without host
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: diet-backend-service
+                port:
+                  number: 80

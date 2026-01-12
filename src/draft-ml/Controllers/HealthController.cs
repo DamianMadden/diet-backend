@@ -31,6 +31,13 @@ namespace draft_ml.Controllers
             return Ok(version);
         }
 
+        [HttpGet("health")]
+        public async Task<IActionResult> Health()
+        {
+            // TODO: Consider checking dependencies
+            return Ok();
+        }
+
         [HttpGet("authtest")]
         [Authorize]
         public async Task<IActionResult> AuthTest()
