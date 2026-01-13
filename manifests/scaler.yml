@@ -14,13 +14,7 @@ spec:
   pollingInterval: 30
   cooldownPeriod: 300
   triggers:
-    - type: prometheus
-      metadata:
-        serverAddress: http://prometheus-server.monitoring.svc.cluster.local
-        metricName: nginx_ingress_controller_requests
-        query: |
-          sum(rate(nginx_ingress_controller_requests{ingress="diet-backend-ingress"}[1m]))
-        threshold: "0.1"  # Scale up if any requests in the last minute
+    # CPU-based scaling (secondary trigger when pods are running)
     - type: cpu
       metricType: Utilization
       metadata:

@@ -1,0 +1,29 @@
+apiVersion: http.keda.sh/v1alpha1
+kind: HTTPScaledObject
+metadata:
+  name: diet-backend-http-scaler
+  labels:
+    app: diet-backend
+spec:
+  # Target deployment
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: diet-backend
+    service: diet-backend-service
+    port: 80
+
+  # Replica configuration
+  replicas:
+    min: 0  # Scale to zero when no traffic
+    max: 1
+
+  # Scaling behavior
+  scalingMetric:
+    requestRate:
+      granularity: 1s
+      targetValue: 10  # Scale up when requests per second exceeds 10
+      window: 1m
+
+  # Cooldown period before scaling to zero
+  cooldownPeriod: 300  # 5 minutes of no traffic before scaling to zero
