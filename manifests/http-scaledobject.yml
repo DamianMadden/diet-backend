@@ -22,5 +22,5 @@ spec:
   scalingMetric:
     requestRate:
       granularity: 1s
-      targetValue: 10  # Scale up when requests per second exceeds 10
+      targetValue: 1  # 1 request per second
       window: 1m
