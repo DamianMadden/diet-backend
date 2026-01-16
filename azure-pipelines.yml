@@ -69,6 +69,6 @@ stages:
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
                 $(Pipeline.Workspace)/manifests/ingress.yml
-                $(Pipeline.Workspace)/manifests/scaler.yml
+                $(Pipeline.Workspace)/manifests/http-scaledobject.yml
               containers: 'dietcr.azurecr.io/diet-backend:$(Build.BuildId)'
               imagePullSecrets: '$(imagePullSecret)'
