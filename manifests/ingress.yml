@@ -6,7 +6,6 @@ metadata:
     app: diet-backend
   annotations:
     # Nginx Ingress Controller annotations
-    spec.ingressClassName: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false" # TODO: Configure SSL
 
@@ -29,6 +28,7 @@ metadata:
     nginx.ingress.kubernetes.io/health-check-path: "/health"
 
 spec:
+  ingressClassName: nginx
   # TLS configuration
   # TODO: SSL Configuration
   # tls:
